@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smart Kisan Connect</title>
+  <style>
+    body {
+      font-family: "Poppins", sans-serif;
+      background: #f4fdf4;
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background: #2e7d32;
+      color: white;
+      text-align: center;
+      padding: 20px 10px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 28px;
+    }
+
+    nav {
+      background: #43a047;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      color: white;
+      padding: 10px 20px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      background: #66bb6a;
+    }
+
+    section {
+      padding: 20px;
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    .card {
+      background: white;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+    }
+
+    .weather input {
+      padding: 8px;
+      width: 200px;
+      margin-right: 10px;
+    }
+
+    .weather button {
+      background: #2e7d32;
+      color: white;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .weather button:hover {
+      background: #43a047;
+    }
+
+    footer {
+      background: #2e7d32;
+      color: white;
+      text-align: center;
+      padding: 10px;
+      margin-top: 20px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🌾 e-Kisan Connect</h1>
+    <p>Empowering Farmers with Weather, Prices, and Government Updates
+By:- Aditya, Ayan</p>
+  </header>
+
+  <nav>
+    <a href="#weather">Weather</a>
+    <a href="#prices">Crop Prices</a>
+    <a href="#schemes">Govt Schemes</a>
+    <a href="#about">About</a>
+  </nav>
+
+  <section id="weather" class="card weather">
+    <h2>🌤 Weather Updates</h2>
+    <input type="text" id="cityInput" placeholder="Enter city name" />
+    <button onclick="getWeather()">Get Weather</button>
+    <div id="weatherResult"></div>
+  </section>
+
+  <section id="prices" class="card">
+    <h2>💰 Crop Prices</h2>
+    <p>Approximate market prices (per quintal):</p>
+    <ul>
+      <li>🌾 Wheat: ₹2,150</li>
+      <li>🌾 Rice: ₹2,100</li>
+      <li>🌽 Maize: ₹1,850</li>
+      <li>🥔 Potato: ₹1,400</li>
+      <li>🌿 Mustard: ₹5,400</li>
+    </ul>
+  </section>
+
+  <section id="schemes" class="card">
+    <h2>🏛 Government Schemes</h2>
+    <ul>
+      <li><b>PM-Kisan Samman Nidhi:</b> ₹6,000 annual income support for small farmers.</li>
+      <li><b>Soil Health Card:</b> Information on soil nutrients for better crop yield.</li>
+      <li><b>PM Fasal Bima Yojana:</b> Crop insurance to protect farmers from loss.</li>
+      <li><b>eNAM:</b> Online National Agriculture Market for selling crops.</li>
+    </ul>
+  </section>
+
+  <section id="about" class="card">
+    <h2>📘 About This Project</h2>
+    <p>
+      Smart Kisan Connect is a student-led initiative of PMSHRI KV IIT Kharagpur to help farmers access weather forecasts,
+      market prices, and government schemes easily in one platform.  
+      The goal is to build a <b>Samriddh Bharat</b> — a prosperous, self-reliant India powered by informed farmers.
+    </p>
+  </section>
+
+  <footer>
+    © 2025 e-Kisan Connect| Made with ❤️ for Samriddh Bharat Buildathon
+  </footer>
+
+  <script>
+    async function getWeather() {
+      const city = document.getElementById("cityInput").value;
+      const apiKey = "https://api.open-meteo.com/v1/forecast?current_weather=true&latitude=28.6&longitude=77.2";
+
+      if (!city) {
+        alert("Please enter a city name!");
+        return;
+      }
+
+      document.getElementById("weatherResult").innerHTML = "Fetching weather data...";
+
+      try {
+        // You can replace this part with actual API call using latitude/longitude for accuracy
+        const response = await fetch(apiKey);
+        const data = await response.json();
+
+        const temp = data.current_weather.temperature;
+        const wind = data.current_weather.windspeed;
+
+        document.getElementById("weatherResult").innerHTML =
+          `<b>${city}</b> → Temperature: ${temp}°C, Wind Speed: ${wind} km/h`;
+      } catch (error) {
+        document.getElementById("weatherResult").innerHTML = "Weather data not available.";
+      }
+    }
+  </script>
+</body>
+</html>
